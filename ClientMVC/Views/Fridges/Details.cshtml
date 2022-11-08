@@ -1,0 +1,68 @@
+﻿@model FridgeProductsDTO
+@{
+    ViewData["Title"] = @Model.FridgeName;
+}
+
+<h3>Details</h3>
+
+<div>
+    <h4>Fridge information</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FridgeName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FridgeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
+    </dl>
+
+    <h3><a asp-action="AddProductInFridge" asp-controller="Fridges" asp-route-fridgeId=@Model.FridgeId.ToString()>Add Product</a></h3>
+
+
+    @if(Model.Products.Count() > 0){
+        <h4>Products in this fridge</h4>
+        <div class="validation" asp-validation-summary="All"></div>
+        <table class="table">
+            <tr><td>Name</td><td>Quantity</td><td></td></tr>
+            @foreach (var prod in Model.Products)
+            {
+                if(prod.Quantity > 0)
+                {
+                    <tr>
+                        <td>@prod.ProductName</td>
+                        <td>
+                            <form method="post" asp-controller="Fridges" asp-action="UpdateProductInFridge">
+                                <input type="hidden" value=@Model.FridgeId name="fridgeId">
+                                <input type="hidden" value=@prod.ProductId name="productId">
+                                <input type="number" value="@prod.Quantity" name="Quantity">
+                                <input type="submit" value="Update">
+                            </form>
+                        </td>
+                        <td>
+                            <a asp-action="RemoveProductFromFridge" asp-controller="Fridges" asp-route-fridgeId=@Model.FridgeId asp-route-productId=@prod.ProductId>Remove</a>
+                        </td>
+                    </tr>
+                }
+                
+            }
+        </table>
+    }
+    else
+    {
+        <h4>There is no products in this fridge</h4>
+    }
+</div>
+
+<a asp-action="Index" asp-controller="Fridges">Go back</a>

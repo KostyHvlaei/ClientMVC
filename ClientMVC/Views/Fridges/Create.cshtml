@@ -1,0 +1,60 @@
+﻿@model ClientMVC.ViewModels.CreateFridgeViewModel
+@{
+    ViewData["Title"] = "Create Fridge";
+}
+
+<h4>Create Fridge</h4>
+
+<form asp-antiforgery="true" asp-action="Create" asp-controller="Fridges">
+    <div>
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="Fridge.Name"></label><br />
+            <input type="text" asp-for="Fridge.Name" />
+            <span asp-validation-for="Fridge.Name"></span>
+        </div>
+        <div>
+            <label asp-for="Fridge.OwnerName"></label><br />
+            <input type="text" asp-for="Fridge.OwnerName" />
+            <span asp-validation-for="Fridge.OwnerName"></span>
+        </div>
+        
+        <div>
+            <select name="Fridge.FridgeModelId" class="form-control" asp-for="Fridge.FridgeModelId">
+                @foreach (var fmodel in Model.FridgeModel)
+                {
+                    <option value="@fmodel.Id">@fmodel.Name</option>
+                }
+            </select>
+        </div>
+
+        <table class="Table">
+            <tr>
+                <td>Product Name</td>
+                <td>Quantity</td>
+                <td>Add?</td>
+            </tr>
+            @for (int i = 0; i < Model.Products.Count; i++)
+            {
+                <tr>
+                    @Html.HiddenFor(model => model.Products[i].ProductId)
+                    <td>@Model.Products[i].Name</td>
+                    <td>
+                        <input type="number" asp-for="Products[i].Quantity" />
+                        <span asp-validation-for="Products[i].Quantity"></span>
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(model => model.Products[i].Changed);
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div>
+            <input type="submit" value="Create" />
+        </div>
+    </div>
+</form>
+
+
+<a asp-action="Index" asp-controller="Fridges">Go back</a>

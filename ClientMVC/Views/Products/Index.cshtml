@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ProductDTO>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<a asp-action="Create" asp-controller="Products">Create new Product</a>
+
+<table class="table">
+    <tr><td>Name</td></><td>Default Quantity</td><td></td></tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product?.DefaultQuantity</td>
+            <td><a asp-action="Edit" asp-controller="Products" asp-route-id=@product.Id.ToString()>Edit</a></td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,27 @@
+﻿@model ProductDTO
+@{
+    ViewData["Title"] = "Edit Fridge Model";
+}
+
+<h4>Create Product</h4>
+
+<form asp-antiforgery="true" asp-action="Edit" asp-controller="Products" asp-route-id=@Model.Id>
+    <div>
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="Name"></label><br />
+            <input type="text" asp-for="Name" value=@Model.Name />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div>
+            <label asp-for="DefaultQuantity"></label><br />
+            <input type="number" asp-for="DefaultQuantity" value=@Model?.DefaultQuantity />
+            <span asp-validation-for="DefaultQuantity"></span>
+        </div>
+        <div>
+            <input type="submit" value="Edit" />
+        </div>
+    </div>
+</form>
+
+<a asp-action="Index" asp-controller="Products">Go back</a>

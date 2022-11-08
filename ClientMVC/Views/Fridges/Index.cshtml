@@ -1,0 +1,22 @@
+﻿@model IEnumerable<FridgeDTO>
+@{
+    ViewData["Title"] = "Fridges";
+}
+
+<a asp-action="Create" asp-controller="Fridges" >Create new Fridge</a>
+
+<table class="table">
+    <tr><td>Name</td></><td>Owner Name</td><td>Model Name</td><td></td><td></td><td></td><td></td></tr>
+    @foreach (var fridge in Model)
+    {
+        <tr>
+            <td>@fridge.Name</td>
+            <td>@fridge.OwnerName</td>
+            <td>@fridge.ModelName</td>
+            <td><a asp-action="Details" asp-controller="Fridges" asp-route-id=@fridge.Id.ToString()>Details</a></td>
+            <td><a asp-action="AddProductInFridge" asp-controller="Fridges" asp-route-fridgeId=@fridge.Id.ToString()>Add Product</a></td>
+            <td><a asp-action="Edit" asp-controller="Fridges" asp-route-id=@fridge.Id.ToString()>Edit</a></td>
+            <td><a asp-action="Delete" asp-controller="Fridges" asp-route-id=@fridge.Id.ToString()>Delete</a></td>
+        </tr>
+    }
+</table>
